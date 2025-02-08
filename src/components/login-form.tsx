@@ -1,28 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { z } from "zod";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { loginFormSchema } from "@/app/schemas/login";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { loginFormSchema } from "@/app/[locale]/schemas/login";
 
 type LoginFormProps = {
   onSubmit: (values: { username: string; password: string }) => void;
@@ -42,17 +28,11 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
     <Card className="w-[350px]">
       <CardHeader>
         <CardTitle>Sign in</CardTitle>
-        <CardDescription>
-          Enter your email and password to sign in
-        </CardDescription>
+        <CardDescription>Enter your email and password to sign in</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form
-            id="loginForm"
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8"
-          >
+          <form id="loginForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
               name="username"

@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { z } from "zod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { signUpFormSchema } from "@/app/schemas/signup";
+import { signUpFormSchema } from "@/app/[locale]/schemas/signup";
 import { Separator } from "@/components/ui/separator";
 import { FacebookIcon } from "lucide-react";
 import { Icons } from "@/components/ui/icons";
