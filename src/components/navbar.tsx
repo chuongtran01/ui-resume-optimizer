@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -23,16 +22,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { persistor, RootState } from "@/redux/store";
 import authService from "@/services/auth";
 import { resetPrincipalAction } from "@/redux/features/principal/principalSlice";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
+import LocaleSwitcher from "./locale-switcher";
 
 export default function UserNavbar() {
   const principalState = useSelector((state: RootState) => state.principal);
+
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const onClickLogout = async () => {
-    console.log("test");
+  const handleLogin = () => {
+    router.push("/login");
+  };
 
+  const handleLogout = async () => {
     await authService.logout();
     dispatch(resetPrincipalAction());
     await persistor.purge();
@@ -202,13 +205,14 @@ export default function UserNavbar() {
           <div>
             <Input type="search" placeholder="Search..." className="md:w-[100px] lg:w-[300px]" />
           </div>
+          <LocaleSwitcher />
           {principalState.isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-                    <AvatarFallback>SC</AvatarFallback>
+                    <AvatarImage src={principalState.avatarUrl} alt="@shadcn" />
+                    <AvatarFallback>{`${principalState.firstName[0].toUpperCase()}${principalState.lastName[0].toUpperCase()}`}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
@@ -236,14 +240,14 @@ export default function UserNavbar() {
                   <DropdownMenuItem>New Team</DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => onClickLogout()}>
+                <DropdownMenuItem onClick={() => handleLogout()}>
                   Log out
                   <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button>Log in</Button>
+            <Button onClick={() => handleLogin()}>Log in</Button>
           )}
         </div>
       </div>
