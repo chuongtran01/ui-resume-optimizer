@@ -1,7 +1,6 @@
 import axios from "axios";
 import { configService } from "@/services/config";
 import authService from "@/services/auth";
-import { useDispatch } from "react-redux";
 import { persistor } from "@/redux/store";
 
 const INVALID_TOKEN_MESSAGE = "invalid_token";
@@ -10,7 +9,8 @@ const EXPIRED_TOKEN_MESSAGE = "expired_token";
 const excludedAuthenticationTokenRoutes = ["/auth/login", "/auth/register", "/auth/refresh-token"];
 
 const apiService = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Set your API base URL
+  // baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Set your API base URL
+  baseURL: "http://localhost:8080/api",
   timeout: 10000, // Request timeout (10 seconds)
   headers: {
     "Content-Type": "application/json",
@@ -53,7 +53,6 @@ apiService.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    debugger;
 
     // Handle errors globally
     if (error.response?.status === 401 && error.response.data.error == INVALID_TOKEN_MESSAGE) {

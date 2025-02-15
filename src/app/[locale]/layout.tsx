@@ -50,7 +50,9 @@ export default async function RootLayout({
           <QueryProvider>
             <StoreProvider>
               <Navbar />
-              {children}
+              <div className="flex justify-center">
+                <div className="container pt-12 pb-4">{children}</div>
+              </div>
             </StoreProvider>
           </QueryProvider>
         </NextIntlClientProvider>
